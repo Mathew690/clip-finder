@@ -1,6 +1,7 @@
 import { useAuth } from './context/AuthContext'
 import LoginForm from './components/LoginForm'
 import ClipLibrary from './components/ClipLibrary'
+import SearchBox from './components/SearchBox'
 import './App.css'
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
       </header>
 
       <main className="app-main">
+        <SearchBox />
         <ClipLibrary />
       </main>
     </div>
