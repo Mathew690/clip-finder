@@ -23,7 +23,7 @@ Searchable index for raw OBS footage. Transcribes the audio of each clip so the 
 
 Phases 1-3 done (idea, tools, live deploy + DB connected). Phase 4 in progress:
 - [x] Schema designed and applied
-- [ ] Auth (Supabase email/password is fine for v1 — owner is the only user initially)
+- [x] Auth — email/password via AuthContext + LoginForm, live in prod, owner's account created. Email confirmation disabled in Supabase (single user for now — re-enable before public launch).
 - [ ] Core loop: pick OBS folder → extract audio → transcribe → insert segments
 - [ ] Search UI: query box → full-text search → results as file + timestamp + surrounding text
 
@@ -33,6 +33,6 @@ Phases 1-3 done (idea, tools, live deploy + DB connected). Phase 4 in progress:
 2. **Audio extraction** — the hard problem. Browser can't read `D:\OBS VIDEOS new` freely. Options: (a) File System Access API folder picker + ffmpeg.wasm audio extraction in-browser, (b) a small local companion script (node) that watches the folder, extracts audio, uploads. Option (a) keeps it pure-web; (b) is simpler tech but a second thing to install. Not yet discussed with user in depth — flagged as "the fresh-brain session."
 3. OBS replay-buffer clips are distinguishable by filename pattern ("Replay" prefix by default) — use for the `clip_type` column.
 
-## Known landmine
+## Resolved landmines
 
-Vercel has NO env vars configured yet. First deployed code that imports the Supabase client will break production until `VITE_SUPABASE_URL` + `VITE_SUPABASE_PUBLISHABLE_KEY` are added in Vercel project settings.
+- Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`) were added 2026-07-06, scoped to Production and Preview. Local dev uses `.env.local`.
