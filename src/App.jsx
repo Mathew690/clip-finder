@@ -1,5 +1,6 @@
 import { useAuth } from './context/AuthContext'
 import LoginForm from './components/LoginForm'
+import ClipLibrary from './components/ClipLibrary'
 import './App.css'
 
 function App() {
@@ -30,11 +31,7 @@ function App() {
       </header>
 
       <main className="app-main">
-        <h2>Welcome in 👋</h2>
-        <p className="muted">
-          Your clip library is empty. Next up: scanning your OBS folder and
-          making every word you said searchable.
-        </p>
+        <ClipLibrary />
       </main>
     </div>
   )
