@@ -24,8 +24,10 @@ Searchable index for raw OBS footage. Transcribes the audio of each clip so the 
 Phases 1-3 done (idea, tools, live deploy + DB connected). Phase 4 in progress:
 - [x] Schema designed and applied
 - [x] Auth — email/password via AuthContext + LoginForm, live in prod, owner's account created. Email confirmation disabled in Supabase (single user for now — re-enable before public launch).
-- [ ] Core loop: pick OBS folder → extract audio → transcribe → insert segments
+- [~] Core loop, first half DONE: `helper/scan.mjs` scans the OBS folder, probes durations via ffprobe, registers clips (175 real clips in DB, 11.8h total). Second half TODO: extract audio (ffmpeg → 16kHz mono opus/m4a) → Groq whisper-large-v3-turbo → insert transcript_segments → set clip status ready.
 - [ ] Search UI: query box → full-text search → results as file + timestamp + surrounding text
+
+Decisions made 2026-07-06: transcription = Groq API (key in `.env.local` as GROQ_API_KEY, verified working; free tier covers the 11.8h backlog). Architecture = local helper script (native ffmpeg, installed) + web app as library/search UI. Helper signs into Supabase with owner credentials from `.env.local` (SUPABASE_EMAIL/SUPABASE_PASSWORD). Web library view: `src/components/ClipLibrary.jsx`, live in prod.
 
 ## Open decisions (decide WITH the user, present options simply)
 
