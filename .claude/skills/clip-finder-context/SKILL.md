@@ -35,6 +35,10 @@ Decisions made 2026-07-06: transcription = Groq API (key in `.env.local` as GROQ
 2. **Audio extraction** — the hard problem. Browser can't read `D:\OBS VIDEOS new` freely. Options: (a) File System Access API folder picker + ffmpeg.wasm audio extraction in-browser, (b) a small local companion script (node) that watches the folder, extracts audio, uploads. Option (a) keeps it pure-web; (b) is simpler tech but a second thing to install. Not yet discussed with user in depth — flagged as "the fresh-brain session."
 3. OBS replay-buffer clips are distinguishable by filename pattern ("Replay" prefix by default) — use for the `clip_type` column.
 
+## Dogfooding insights (feature backlog, prioritize by user pain)
+
+1. (2026-07-07) User deletes big raw files for disk space as soon as a video ships. App needs graceful handling: an "archived" state that keeps transcripts searchable after the file is gone (transcripts are tiny — keep them forever, that's the whole value), plus scan detecting missing files instead of transcribe erroring on them. Interim workaround used: deleted the 7 error rows manually.
+
 ## Resolved landmines
 
 - Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`) were added 2026-07-06, scoped to Production and Preview. Local dev uses `.env.local`.
