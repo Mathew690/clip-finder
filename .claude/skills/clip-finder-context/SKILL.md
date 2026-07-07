@@ -52,6 +52,26 @@ Decisions made 2026-07-06: transcription = Groq API (key in `.env.local` as GROQ
 2. **Groq key proxy**: transcription must go through a Supabase Edge Function holding the key server-side, checking auth + subscription before transcribing. This IS the Phase 5 Stripe work in practice.
 3. **Per-user quotas**: monthly transcribed-hours column; enables free trial without cost bleed. Unit economics: Groq ≈ $0.04/audio-hour → $5-8/mo sub has fat margin.
 
+## Business model + quota design (agreed 2026-07-07, owner understands and endorses)
+
+Money flow: customer pays owner via Stripe → owner's Edge Function calls Groq on OWNER's key → Groq bills owner. Owner keeps the spread. Customers never see/touch the Groq key.
+
+Pricing math (planning numbers, revisit at build):
+- Sub ~$7/mo. Stripe takes ~2.9%+$0.30 (~$0.50). Owner nets ~$6.50.
+- Groq cost ~$0.04/audio-hour. A 50hr/mo cap = ~$2 worst-case cost. Profit ~$4.50-5.70/user/mo.
+- 100 users ≈ ~$550/mo profit. Margin stays fat because transcription is cheap + sub is fixed.
+
+Quota enforcement — CRITICAL: the limit check MUST live in the Edge Function (server-side), NEVER in the downloadable companion app (client-side checks are bypassable — user could edit the app and drain owner's Groq account). 
+
+Edge Function gate on EVERY transcription request, in order:
+1. Verify user's auth token (who).
+2. Check active subscription in Supabase (are they paid / not cancelled).
+3. Check hours_used vs cap for current period.
+4. If under cap → call Groq, transcribe, increment hours_used.
+5. If at/over cap → refuse WITHOUT calling Groq (owner cost = $0). Return "monthly limit reached."
+
+Schema needed later: subscription status + `hours_used` + `period_start` per user (or a usage table). Reset hours_used to 0 on each confirmed Stripe billing cycle. Companion app shows friendly wall at limit; real enforcement is server-side.
+
 ## Resolved landmines
 
 - Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`) were added 2026-07-06, scoped to Production and Preview. Local dev uses `.env.local`.
