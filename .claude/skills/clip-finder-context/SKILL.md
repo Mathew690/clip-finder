@@ -39,6 +39,13 @@ Decisions made 2026-07-06: transcription = Groq API (key in `.env.local` as GROQ
 
 1. (2026-07-07) User deletes big raw files for disk space as soon as a video ships. App needs graceful handling: an "archived" state that keeps transcripts searchable after the file is gone (transcripts are tiny — keep them forever, that's the whole value), plus scan detecting missing files instead of transcribe erroring on them. Interim workaround used: deleted the 7 error rows manually.
 
+## Agreed v2 roadmap (2026-07-07, owner's vision, in priority order)
+
+1. **Audio preview on search results** — store extracted audio going forward (16kHz opus ≈ 11MB/hr; whole library ~130MB fits Supabase Storage free tier). Search result gets a ▶ button playing the moment. Requires: transcribe.mjs uploads audio to Storage instead of deleting; RLS on the bucket.
+2. **Export clip to editor** — from a search result, request a cut; helper (watching a jobs table or run on demand) uses ffmpeg `-ss/-to -c copy` to cut the segment into an `exports/` folder for drag-into-Premiere. Requires: export_jobs table.
+3. Landing page + copy-timestamp button: DONE 2026-07-07.
+4. Video preview: blocked by .mkv (browsers can't play it). Path: switch OBS to record mp4 (or auto-remux) for future clips, then local playback via File System Access API.
+
 ## Resolved landmines
 
 - Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`) were added 2026-07-06, scoped to Production and Preview. Local dev uses `.env.local`.
