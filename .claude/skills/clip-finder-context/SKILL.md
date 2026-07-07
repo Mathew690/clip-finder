@@ -46,6 +46,12 @@ Decisions made 2026-07-06: transcription = Groq API (key in `.env.local` as GROQ
 3. Landing page + copy-timestamp button: DONE 2026-07-07.
 4. Video preview: blocked by .mkv (browsers can't play it). Path: switch OBS to record mp4 (or auto-remux) for future clips, then local playback via File System Access API.
 
+## Launch blockers (what stands between "works for owner" and "strangers can buy") — identified 2026-07-07
+
+1. **Companion app**: package the helper as a downloadable Windows app (login + folder picker + start button; no terminal). Candidate tech: Tauri tray app, or pkg/bun-compiled CLI first. Folder-agnostic already.
+2. **Groq key proxy**: transcription must go through a Supabase Edge Function holding the key server-side, checking auth + subscription before transcribing. This IS the Phase 5 Stripe work in practice.
+3. **Per-user quotas**: monthly transcribed-hours column; enables free trial without cost bleed. Unit economics: Groq ≈ $0.04/audio-hour → $5-8/mo sub has fat margin.
+
 ## Resolved landmines
 
 - Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`) were added 2026-07-06, scoped to Production and Preview. Local dev uses `.env.local`.
