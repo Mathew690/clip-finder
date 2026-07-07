@@ -26,10 +26,36 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="login-wrap">
+    <div className="landing">
+      <div className="hero">
+        <p className="hero-brand">🎬 Clip Finder</p>
+        <h1 className="hero-title">
+          Find any line in your raw footage, <span className="hero-accent">instantly.</span>
+        </h1>
+        <p className="hero-sub">
+          Point it at your footage folder. Every word you said gets transcribed
+          automatically. Search anything — jump straight to the exact file and
+          timestamp. No more scrubbing.
+        </p>
+
+        <ul className="hero-steps">
+          <li>
+            <span className="step-icon">📁</span>
+            <span>Scan your recording folder — video never leaves your PC</span>
+          </li>
+          <li>
+            <span className="step-icon">🎙️</span>
+            <span>Every spoken word transcribed and indexed</span>
+          </li>
+          <li>
+            <span className="step-icon">🔍</span>
+            <span>Search a phrase → get the file and timestamp</span>
+          </li>
+        </ul>
+      </div>
+
       <div className="login-card">
-        <h1>🎬 Clip Finder</h1>
-        <p className="tagline">Search your raw footage by what you said</p>
+        <h2 className="login-heading">{mode === 'signin' ? 'Welcome back' : 'Create your account'}</h2>
 
         <form onSubmit={handleSubmit}>
           <label>

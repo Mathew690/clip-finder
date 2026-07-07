@@ -7,6 +7,34 @@ function formatTimestamp(seconds) {
   return `${mins}:${String(secs).padStart(2, '0')}`
 }
 
+function CopyButton({ filename, seconds }) {
+  const [copied, setCopied] = useState(false)
+
+  async function copy() {
+    const text = `${filename} @ ${formatTimestamp(seconds)}`
+    try {
+      await navigator.clipboard.writeText(text)
+    } catch {
+      const ta = document.createElement('textarea')
+      ta.value = text
+      ta.style.position = 'fixed'
+      ta.style.opacity = '0'
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      ta.remove()
+    }
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+
+  return (
+    <button type="button" className="copy-button" onClick={copy}>
+      {copied ? 'Copied ✓' : 'Copy'}
+    </button>
+  )
+}
+
 export default function SearchBox() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState(null)
@@ -64,6 +92,7 @@ export default function SearchBox() {
                 <div className="result-where">
                   <span className="result-file">{r.clips.filename}</span>
                   <span className="result-time">at {formatTimestamp(r.start_seconds)}</span>
+                  <CopyButton filename={r.clips.filename} seconds={r.start_seconds} />
                 </div>
                 <p className="result-text">"{r.text}"</p>
               </li>

@@ -6,6 +6,81 @@
   padding: 24px;
 }
 
+.landing {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  padding: 48px 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.hero {
+  flex: 1;
+  min-width: 320px;
+  max-width: 520px;
+}
+
+.hero-brand {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 700;
+  margin: 0 0 16px;
+  letter-spacing: -0.5px;
+}
+
+.hero-accent {
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.hero-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hero-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.step-icon {
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
 .login-card {
   width: 100%;
   max-width: 380px;
@@ -16,9 +91,29 @@
   text-align: center;
 }
 
+.login-heading {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
 .tagline {
   color: var(--muted);
   margin-bottom: 24px;
+}
+
+.copy-button {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+}
+
+.copy-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .login-card form {
