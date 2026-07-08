@@ -50,6 +50,7 @@ Decisions made 2026-07-06: transcription = Groq API (key in `.env.local` as GROQ
 
 1. **Companion app**: package the helper as a downloadable Windows app (login + folder picker + start button; no terminal). Candidate tech: Tauri tray app, or pkg/bun-compiled CLI first. Folder-agnostic already.
 2. **Groq key proxy**: transcription must go through a Supabase Edge Function holding the key server-side, checking auth + subscription before transcribing. This IS the Phase 5 Stripe work in practice.
+   - NOTE (2026-07-08): owner wants an in-browser file picker in Add Footage (select files, no terminal). BLOCKED BY #2: the browser bundle is public, so it can never hold the Groq key — browser-side adding requires the Edge Function proxy first, plus ffmpeg.wasm for in-browser audio extraction (viable for a few clips, not for 100+ backlogs — companion app remains the bulk path). Sequencing: build #2, then browser picker as the casual-user path alongside the companion app.
 3. **Per-user quotas**: monthly transcribed-hours column; enables free trial without cost bleed. Unit economics: Groq ≈ $0.04/audio-hour → $5-8/mo sub has fat margin.
 
 ## Business model + quota design (agreed 2026-07-07, owner understands and endorses)
