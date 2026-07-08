@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { copyText, formatTimestamp } from '../lib/copyText'
 
-function formatTimestamp(seconds) {
-  const mins = Math.floor(seconds / 60)
-  const secs = Math.floor(seconds % 60)
-  return `${mins}:${String(secs).padStart(2, '0')}`
+function CopyMomentButton({ moment }) {
+  const [copied, setCopied] = useState(false)
+
+  async function copy() {
+    await copyText(
+      `${moment.clips.filename} @ ${formatTimestamp(moment.start_seconds)} — "${moment.text}"`
+    )
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+
+  return (
+    <button type="button" className="copy-button" onClick={copy}>
+      {copied ? 'Copied ✓' : 'Copy'}
+    </button>
+  )
 }
 
 export default function SavedPage() {
@@ -25,22 +38,6 @@ export default function SavedPage() {
   async function remove(id) {
     await supabase.from('saved_moments').delete().eq('id', id)
     setMoments(moments.filter((m) => m.id !== id))
-  }
-
-  async function copy(m) {
-    const text = `${m.clips.filename} @ ${formatTimestamp(m.start_seconds)} — "${m.text}"`
-    try {
-      await navigator.clipboard.writeText(text)
-    } catch {
-      const ta = document.createElement('textarea')
-      ta.value = text
-      ta.style.position = 'fixed'
-      ta.style.opacity = '0'
-      document.body.appendChild(ta)
-      ta.select()
-      document.execCommand('copy')
-      ta.remove()
-    }
   }
 
   if (error) return <p className="error">Couldn't load saved moments: {error}</p>
@@ -69,8 +66,10 @@ export default function SavedPage() {
               <span className="result-file">{m.clips.filename}</span>
               <span className="result-time">at {formatTimestamp(m.start_seconds)}</span>
               <div className="row-actions">
-                <button type="button" className="copy-button" onClick={() => copy(m)}>Copy</button>
-                <button type="button" className="copy-button danger-hover" onClick={() => remove(m.id)}>Remove</button>
+                <CopyMomentButton moment={m} />
+                <button type="button" className="copy-button danger-hover" onClick={() => remove(m.id)}>
+                  Remove
+                </button>
               </div>
             </div>
             <p className="result-text">"{m.text}"</p>
