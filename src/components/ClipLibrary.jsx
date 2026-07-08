@@ -1,6 +1,31 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
+function RemoveButton({ clip, onRemoved }) {
+  const [confirming, setConfirming] = useState(false)
+
+  async function remove() {
+    const { error } = await supabase.from('clips').delete().eq('id', clip.id)
+    if (!error) onRemoved(clip.id)
+  }
+
+  if (confirming) {
+    return (
+      <span className="confirm-remove">
+        <span className="confirm-text">Deletes transcript + saved moments too</span>
+        <button type="button" className="copy-button danger-hover" onClick={remove}>Confirm</button>
+        <button type="button" className="copy-button" onClick={() => setConfirming(false)}>Cancel</button>
+      </span>
+    )
+  }
+
+  return (
+    <button type="button" className="copy-button danger-hover" onClick={() => setConfirming(true)}>
+      Remove
+    </button>
+  )
+}
+
 function formatDuration(seconds) {
   if (!seconds) return '—'
   const mins = Math.floor(seconds / 60)
@@ -77,7 +102,10 @@ export default function ClipLibrary() {
                 {clip.clip_type === 'replay' && ' · replay'}
               </span>
             </div>
-            <span className={`status status-${clip.status}`}>{clip.status}</span>
+            <div className="clip-actions">
+              <RemoveButton clip={clip} onRemoved={(id) => setClips(clips.filter((c) => c.id !== id))} />
+              <span className={`status status-${clip.status}`}>{clip.status}</span>
+            </div>
           </li>
         ))}
       </ul>
