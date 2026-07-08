@@ -7,6 +7,28 @@ function formatTimestamp(seconds) {
   return `${mins}:${String(secs).padStart(2, '0')}`
 }
 
+function SaveButton({ result }) {
+  const [state, setState] = useState('idle')
+
+  async function save() {
+    setState('saving')
+    const { error } = await supabase.from('saved_moments').insert({
+      clip_id: result.clip_id,
+      start_seconds: result.start_seconds,
+      end_seconds: result.end_seconds,
+      text: result.text,
+    })
+    setState(error ? 'idle' : 'saved')
+  }
+
+  if (state === 'saved') return <span className="saved-badge">★ Saved</span>
+  return (
+    <button type="button" className="copy-button" onClick={save} disabled={state === 'saving'}>
+      ☆ Save
+    </button>
+  )
+}
+
 function CopyButton({ filename, seconds }) {
   const [copied, setCopied] = useState(false)
 
@@ -53,7 +75,7 @@ export default function SearchBox() {
 
     const { data, error } = await supabase
       .from('transcript_segments')
-      .select('start_seconds, end_seconds, text, clips(filename, recorded_at)')
+      .select('clip_id, start_seconds, end_seconds, text, clips(filename, recorded_at)')
       .textSearch('fts', q, { type: 'websearch' })
       .limit(50)
 
@@ -92,7 +114,10 @@ export default function SearchBox() {
                 <div className="result-where">
                   <span className="result-file">{r.clips.filename}</span>
                   <span className="result-time">at {formatTimestamp(r.start_seconds)}</span>
-                  <CopyButton filename={r.clips.filename} seconds={r.start_seconds} />
+                  <div className="row-actions">
+                    <SaveButton result={r} />
+                    <CopyButton filename={r.clips.filename} seconds={r.start_seconds} />
+                  </div>
                 </div>
                 <p className="result-text">"{r.text}"</p>
               </li>

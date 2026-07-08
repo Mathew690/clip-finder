@@ -46,3 +46,22 @@ create policy "own segments" on transcript_segments
   ) with check (
     exists (select 1 from clips where clips.id = clip_id and clips.user_id = auth.uid())
   );
+
+-- Added 2026-07-08: Saved Moments ("editing gold pile")
+create table saved_moments (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users (id) default auth.uid(),
+  clip_id uuid not null references clips (id) on delete cascade,
+  start_seconds numeric not null,
+  end_seconds numeric,
+  text text not null,
+  note text,
+  created_at timestamptz not null default now()
+);
+
+create index on saved_moments (user_id, created_at desc);
+
+alter table saved_moments enable row level security;
+
+create policy "own moments" on saved_moments
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);

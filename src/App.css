@@ -195,25 +195,251 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 24px;
+  padding: 12px 24px;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 28px;
 }
 
 .app-title {
   font-weight: 600;
   font-size: 17px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.main-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.main-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.main-nav a:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.main-nav a.active {
+  color: var(--text);
+  background: rgba(124, 92, 255, 0.15);
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   font-size: 14px;
 }
 
 .header-right .link-button {
   margin-top: 0;
+}
+
+.page-title {
+  margin-bottom: 20px;
+}
+
+.add-footage-button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.add-footage-button:hover {
+  background: var(--accent-hover);
+}
+
+.profile-menu {
+  position: relative;
+}
+
+.profile-trigger {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.profile-trigger:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.chevron {
+  font-size: 10px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+  min-width: 220px;
+  z-index: 50;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown-email {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.dropdown-item:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-item:disabled {
+  color: var(--muted);
+  cursor: default;
+}
+
+.dropdown-item.danger {
+  color: var(--danger);
+}
+
+.soon {
+  font-size: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 24px;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 480px;
+  width: 100%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.modal-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.muted-small {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+.command-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+
+.command-row code {
+  flex: 1;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
+
+.row-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+
+.row-actions .copy-button {
+  margin-left: 0;
+}
+
+.saved-badge {
+  font-size: 12px;
+  color: var(--accent);
+  padding: 3px 10px;
+}
+
+.danger-hover:hover {
+  border-color: var(--danger);
+  color: var(--danger);
 }
 
 .app-main {
