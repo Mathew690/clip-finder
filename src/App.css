@@ -442,6 +442,37 @@
   color: var(--danger);
 }
 
+.library-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.danger-button {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #e05555;
+}
+
+.danger-button:disabled {
+  opacity: 0.6;
+}
+
 .clip-actions {
   display: flex;
   align-items: center;

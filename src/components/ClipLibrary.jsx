@@ -41,6 +41,62 @@ function formatDate(iso) {
   })
 }
 
+function RemoveAllButton({ count, onCleared }) {
+  const [open, setOpen] = useState(false)
+  const [working, setWorking] = useState(false)
+
+  async function removeAll() {
+    setWorking(true)
+    const { error } = await supabase.from('clips').delete().not('id', 'is', null)
+    setWorking(false)
+    if (!error) {
+      setOpen(false)
+      onCleared()
+    }
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        className="copy-button danger-hover"
+        title="⚠️ Dangerous button. Removes ALL clips from your library."
+        onClick={() => setOpen(true)}
+      >
+        Remove all
+      </button>
+
+      {open && (
+        <div className="modal-backdrop" onClick={(e) => { if (e.target === e.currentTarget) setOpen(false) }}>
+          <div className="modal">
+            <div className="modal-header">
+              <h3>⚠️ Remove ALL {count} clips?</h3>
+              <button type="button" className="modal-close" onClick={() => setOpen(false)}>✕</button>
+            </div>
+            <p className="modal-text">
+              This wipes your entire library — every clip, every transcript, every
+              saved moment. The video files on your PC are safe, but the app will
+              forget every word you ever said. Like it never knew you.
+            </p>
+            <p className="modal-text muted-small">
+              (You can always re-sync your folder afterwards, but transcribing
+              everything again takes time.)
+            </p>
+            <div className="modal-actions">
+              <button type="button" className="copy-button" onClick={() => setOpen(false)}>
+                No — I said what I said
+              </button>
+              <button type="button" className="danger-button" onClick={removeAll} disabled={working}>
+                {working ? 'Forgetting everything…' : 'Yes, wipe it all'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
 export default function ClipLibrary() {
   const [clips, setClips] = useState(null)
   const [error, setError] = useState(null)
@@ -77,6 +133,9 @@ export default function ClipLibrary() {
 
   return (
     <div>
+      <div className="library-toolbar">
+        <RemoveAllButton count={clips.length} onCleared={() => setClips([])} />
+      </div>
       <div className="library-stats">
         <div className="stat">
           <span className="stat-number">{clips.length}</span>

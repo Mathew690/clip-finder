@@ -38,7 +38,8 @@ export default function AddFootage() {
 
             <p className="modal-text">
               Your video files stay on your PC — ClipScry only indexes the words.
-              To add new recordings, open a terminal in your ClipScry folder and run:
+              To add new recordings, double-click <strong>ClipScry Sync</strong> on
+              your desktop (or run this in a terminal opened in the ClipScry folder):
             </p>
 
             <div className="command-row">
