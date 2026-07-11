@@ -1,4 +1,4 @@
-// Clip Finder helper — Step 1: scan the OBS folder and register clips in the database.
+// ClipScry helper — Step 1: scan the OBS folder and register clips in the database.
 // Run from the project root:  node helper/scan.mjs ["D:\\OBS VIDEOS new"]
 // Reads credentials from .env.local (never committed).
 

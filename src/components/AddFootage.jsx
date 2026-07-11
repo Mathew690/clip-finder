@@ -37,8 +37,8 @@ export default function AddFootage() {
             </div>
 
             <p className="modal-text">
-              Your video files stay on your PC — Clip Finder only indexes the words.
-              To add new recordings, open a terminal in your Clip Finder folder and run:
+              Your video files stay on your PC — ClipScry only indexes the words.
+              To add new recordings, open a terminal in your ClipScry folder and run:
             </p>
 
             <div className="command-row">

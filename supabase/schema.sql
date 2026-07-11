@@ -1,4 +1,4 @@
--- Clip Finder database schema
+-- ClipScry database schema
 -- Source of truth for what the Supabase database looks like.
 -- Applied in the Supabase SQL Editor on 2026-07-06. Append future changes below with a dated comment.
 

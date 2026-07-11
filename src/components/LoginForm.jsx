@@ -28,7 +28,7 @@ export default function LoginForm() {
   return (
     <div className="landing">
       <div className="hero">
-        <p className="hero-brand">🎬 Clip Finder</p>
+        <p className="hero-brand">🔮 ClipScry</p>
         <h1 className="hero-title">
           Find any line in your raw footage, <span className="hero-accent">instantly.</span>
         </h1>

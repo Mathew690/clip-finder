@@ -1,9 +1,9 @@
 ---
 name: clip-finder-context
-description: Current state of the Clip Finder project — architecture, URLs, schema, roadmap position, and open decisions. Use at session start to orient before doing any work.
+description: Current state of the ClipScry project — architecture, URLs, schema, roadmap position, and open decisions. Use at session start to orient before doing any work.
 ---
 
-# Clip Finder — project state
+# ClipScry — project state
 
 Handoff note: read this first in any new session, then check `git log --oneline -5` and the vault checklist for anything newer than this file. If this file contradicts the code, trust the code and update this file.
 
@@ -17,7 +17,7 @@ Searchable index for raw OBS footage. Transcribes the audio of each clip so the 
 - Production: https://clip-finder-tau.vercel.app (auto-deploys from `main`)
 - Supabase project: `dugdiqinydgraqbxtidu` — client singleton at `src/lib/supabase.js`, keys in `.env.local` (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`)
 - Schema: two tables, `clips` and `transcript_segments`, with full-text search (`fts` tsvector + GIN index) and owner-only RLS. Full SQL in `supabase/schema.sql`.
-- Vault docs: `D:\My Vault\Vault Build\Clip Finder - Build Checklist.md` and `Clip Finder - Spec.md`
+- Vault docs: `D:\My Vault\Vault Build\ClipScry - Build Checklist.md` and `ClipScry - Spec.md`
 
 ## Roadmap position (as of 2026-07-06)
 

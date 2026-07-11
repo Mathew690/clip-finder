@@ -1,4 +1,4 @@
-// Clip Finder helper — Step 2: transcribe pending clips.
+// ClipScry helper — Step 2: transcribe pending clips.
 // Extracts audio with ffmpeg, transcribes with Groq Whisper, stores segments in Supabase.
 // Run from the project root:
 //   node helper/transcribe.mjs            → process ALL pending clips (smallest first)

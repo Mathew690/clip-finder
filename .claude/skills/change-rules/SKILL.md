@@ -1,6 +1,6 @@
 ---
 name: change-rules
-description: Rules for making any change to the Clip Finder codebase or database — commits, schema changes, secrets, deploys, scope. Use before writing code, altering tables, or pushing.
+description: Rules for making any change to the ClipScry codebase or database — commits, schema changes, secrets, deploys, scope. Use before writing code, altering tables, or pushing.
 ---
 
 # Change rules
@@ -9,7 +9,7 @@ Handoff note: these rules exist because the project's owner is a first-time buil
 
 ## Scope
 
-- The product idea is LOCKED. Spec lives at `D:\My Vault\Vault Build\Clip Finder - Spec.md`. Do not redesign, do not suggest pivots, do not add features beyond the current phase. Simplest version that works, always.
+- The product idea is LOCKED. Spec lives at `D:\My Vault\Vault Build\ClipScry - Spec.md`. Do not redesign, do not suggest pivots, do not add features beyond the current phase. Simplest version that works, always.
 - One feature per session. Every session must end with something visibly working — that is non-negotiable, it is what keeps the project alive.
 - v1 out-of-scope (do not build): in-app video playback, editor plugins, visual/AI tagging of frames.
 
@@ -28,4 +28,4 @@ Handoff note: these rules exist because the project's owner is a first-time buil
 
 ## Bookkeeping
 
-- When a checklist item or phase completes, update `D:\My Vault\Vault Build\Clip Finder - Build Checklist.md` (checkbox + short result note). The user relies on this file to see progress — it is part of the product.
+- When a checklist item or phase completes, update `D:\My Vault\Vault Build\ClipScry - Build Checklist.md` (checkbox + short result note). The user relies on this file to see progress — it is part of the product.

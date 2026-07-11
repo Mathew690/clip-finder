@@ -21,7 +21,7 @@ Handoff note: this is the most important file in the handoff. The code is easy; 
 
 ## Decisions already settled — do not reopen
 
-- The product: Clip Finder (spec in vault). Chosen after a long, honest brainstorm that ruled out: reseller tools, note apps, GTA companion apps, generic YouTube AI tools, screen-time apps (all verified saturated), and a Fooda prep predictor (platform already does it).
+- The product: ClipScry (spec in vault). Chosen after a long, honest brainstorm that ruled out: reseller tools, note apps, GTA companion apps, generic YouTube AI tools, screen-time apps (all verified saturated), and a Fooda prep predictor (platform already does it).
 - The stack: React + Vite, Supabase, Vercel, Stripe later. Free tier until revenue.
 - Marketing plan: his own usage as proof + show-and-tell posts in creator communities + search-intent content. NOT ads inside his gameplay videos (his viewers aren't the buyers; other creators are).
 
@@ -31,5 +31,5 @@ Handoff note: this is the most important file in the handoff. The code is easy; 
 
 ## Context that matters
 
-- 28, works food-service gigs, tired of family support, history of platform-dependent failures (Turkish YT channel died at 20k subs, Amazon dropshipping killed by FBA changes). Clip Finder is the first thing he fully owns — that framing helps him when he doubts.
+- 28, works food-service gigs, tired of family support, history of platform-dependent failures (Turkish YT channel died at 20k subs, Amazon dropshipping killed by FBA changes). ClipScry is the first thing he fully owns — that framing helps him when he doubts.
 - Runs the Mr Reset YouTube channel (faceless gameplay narratives, heavy editing, ~280 subs, slow-burn by design). The app exists because of his own 1TB raw-footage problem — he is user #1.

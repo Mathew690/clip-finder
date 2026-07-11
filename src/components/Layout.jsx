@@ -7,7 +7,7 @@ export default function Layout() {
     <div className="app-shell">
       <header className="app-header">
         <div className="header-left">
-          <NavLink to="/" className="app-title">🎬 Clip Finder</NavLink>
+          <NavLink to="/" className="app-title">🔮 ClipScry</NavLink>
           <nav className="main-nav">
             <NavLink to="/" end>Search</NavLink>
             <NavLink to="/library">Library</NavLink>

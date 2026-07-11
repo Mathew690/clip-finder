@@ -1,6 +1,6 @@
 ---
 name: debugging-playbook
-description: How to debug problems in the Clip Finder project — use whenever an error, unexpected behavior, empty query result, or failed deploy comes up. Contains known gotchas specific to this machine and stack.
+description: How to debug problems in the ClipScry project — use whenever an error, unexpected behavior, empty query result, or failed deploy comes up. Contains known gotchas specific to this machine and stack.
 ---
 
 # Debugging playbook
