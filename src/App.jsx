@@ -4,6 +4,7 @@ import LandingPage from './components/LandingPage'
 import Layout from './components/Layout'
 import ClipLibrary from './components/ClipLibrary'
 import SearchBox from './components/SearchBox'
+import ImpactPanel from './components/ImpactPanel'
 import SavedPage from './pages/SavedPage'
 import RoadmapPage from './pages/RoadmapPage'
 import './App.css'
@@ -11,6 +12,7 @@ import './App.css'
 function SearchPage() {
   return (
     <div>
+      <ImpactPanel />
       <h2 className="page-title">Search your footage</h2>
       <SearchBox />
     </div>

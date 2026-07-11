@@ -679,6 +679,45 @@
   margin-bottom: 20px;
 }
 
+.impact {
+  margin-bottom: 32px;
+}
+
+.impact-heading {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.impact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.impact-value {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+
+.impact-label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
 .add-footage-button {
   background: var(--accent);
   color: #fff;
