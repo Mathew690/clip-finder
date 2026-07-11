@@ -4,8 +4,9 @@
   --border: #2b2f3a;
   --text: #e6e8ee;
   --muted: #8b91a0;
-  --accent: #7c5cff;
-  --accent-hover: #6a4be6;
+  --accent: #22c55e;
+  --accent-hover: #16a34a;
+  --accent-soft: #4ade80;
   --danger: #ff6b6b;
 
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;

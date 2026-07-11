@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
-import LoginForm from './components/LoginForm'
+import LandingPage from './components/LandingPage'
 import Layout from './components/Layout'
 import ClipLibrary from './components/ClipLibrary'
 import SearchBox from './components/SearchBox'
@@ -37,7 +37,7 @@ function App() {
   }
 
   if (!user) {
-    return <LoginForm />
+    return <LandingPage />
   }
 
   return (

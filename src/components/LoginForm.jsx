@@ -26,77 +26,48 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="landing">
-      <div className="hero">
-        <p className="hero-brand">🔮 ClipScry</p>
-        <h1 className="hero-title">
-          Find any line in your raw footage, <span className="hero-accent">instantly.</span>
-        </h1>
-        <p className="hero-sub">
-          Point it at your footage folder. Every word you said gets transcribed
-          automatically. Search anything — jump straight to the exact file and
-          timestamp. No more scrubbing.
-        </p>
+    <div className="login-card">
+      <h2 className="login-heading">{mode === 'signin' ? 'Welcome back' : 'Create your account'}</h2>
 
-        <ul className="hero-steps">
-          <li>
-            <span className="step-icon">📁</span>
-            <span>Scan your recording folder — video never leaves your PC</span>
-          </li>
-          <li>
-            <span className="step-icon">🎙️</span>
-            <span>Every spoken word transcribed and indexed</span>
-          </li>
-          <li>
-            <span className="step-icon">🔍</span>
-            <span>Search a phrase → get the file and timestamp</span>
-          </li>
-        </ul>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Email
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+            required
+            autoComplete="email"
+          />
+        </label>
+        <label>
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+            required
+            minLength={6}
+            autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+          />
+        </label>
 
-      <div className="login-card">
-        <h2 className="login-heading">{mode === 'signin' ? 'Welcome back' : 'Create your account'}</h2>
+        {error && <p className="error">{error}</p>}
 
-        <form onSubmit={handleSubmit}>
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-              autoComplete="email"
-            />
-          </label>
-          <label>
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-              minLength={6}
-              autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-            />
-          </label>
-
-          {error && <p className="error">{error}</p>}
-
-          <button type="submit" disabled={submitting}>
-            {submitting ? 'One sec…' : mode === 'signin' ? 'Sign in' : 'Create account'}
-          </button>
-        </form>
-
-        <button
-          type="button"
-          className="link-button"
-          onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setError(null) }}
-        >
-          {mode === 'signin' ? 'No account yet? Create one' : 'Already have an account? Sign in'}
+        <button type="submit" disabled={submitting}>
+          {submitting ? 'One sec…' : mode === 'signin' ? 'Sign in' : 'Create account'}
         </button>
-      </div>
+      </form>
+
+      <button
+        type="button"
+        className="link-button"
+        onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setError(null) }}
+      >
+        {mode === 'signin' ? 'No account yet? Create one' : 'Already have an account? Sign in'}
+      </button>
     </div>
   )
 }
