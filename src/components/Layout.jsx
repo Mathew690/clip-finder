@@ -13,6 +13,7 @@ export default function Layout() {
             <NavLink to="/" end>Search</NavLink>
             <NavLink to="/library">Library</NavLink>
             <NavLink to="/saved">Saved</NavLink>
+            <NavLink to="/roadmap">Roadmap</NavLink>
           </nav>
         </div>
         <div className="header-right">

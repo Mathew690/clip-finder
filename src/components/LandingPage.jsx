@@ -83,6 +83,28 @@ export default function LandingPage() {
       </section>
 
       <section className="lp-section">
+        <h2 className="lp-h2">The difference</h2>
+        <div className="lp-ba">
+          <div className="lp-ba-card">
+            <p className="lp-ba-title without">Without ClipScry</p>
+            <ul className="lp-ba-list">
+              <li>❌ Watch back 3 hours of footage</li>
+              <li>❌ Drag the timeline, hunting</li>
+              <li>❌ Guess where the moment was</li>
+            </ul>
+          </div>
+          <div className="lp-ba-card after">
+            <p className="lp-ba-title with">With ClipScry</p>
+            <ul className="lp-ba-list">
+              <li>✓ Type one sentence</li>
+              <li>✓ Click the result</li>
+              <li>✓ Done</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="lp-section">
         <h2 className="lp-h2">Perfect for</h2>
         <div className="lp-audience">
           {audiences.map((a) => (

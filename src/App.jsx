@@ -5,6 +5,7 @@ import Layout from './components/Layout'
 import ClipLibrary from './components/ClipLibrary'
 import SearchBox from './components/SearchBox'
 import SavedPage from './pages/SavedPage'
+import RoadmapPage from './pages/RoadmapPage'
 import './App.css'
 
 function SearchPage() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/" element={<SearchPage />} />
         <Route path="/library" element={<LibraryPage />} />
         <Route path="/saved" element={<SavedPage />} />
+        <Route path="/roadmap" element={<RoadmapPage />} />
         <Route path="*" element={<SearchPage />} />
       </Route>
     </Routes>
