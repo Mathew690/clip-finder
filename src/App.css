@@ -448,6 +448,35 @@
   margin-bottom: 12px;
 }
 
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.tooltip-wrap:hover .tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .modal-actions {
   display: flex;
   justify-content: flex-end;

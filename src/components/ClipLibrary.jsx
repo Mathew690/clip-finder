@@ -57,14 +57,16 @@ function RemoveAllButton({ count, onCleared }) {
 
   return (
     <>
-      <button
-        type="button"
-        className="copy-button danger-hover"
-        title="⚠️ Dangerous button. Removes ALL clips from your library."
-        onClick={() => setOpen(true)}
-      >
-        Remove all
-      </button>
+      <span className="tooltip-wrap">
+        <button
+          type="button"
+          className="copy-button danger-hover"
+          onClick={() => setOpen(true)}
+        >
+          Remove all
+        </button>
+        <span className="tooltip">⚠️ Dangerous button — removes ALL clips from your library</span>
+      </span>
 
       {open && (
         <div className="modal-backdrop" onClick={(e) => { if (e.target === e.currentTarget) setOpen(false) }}>
