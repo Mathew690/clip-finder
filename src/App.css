@@ -26,9 +26,21 @@
 }
 
 .lp-logo {
-  font-size: 26px;
-  font-weight: 600;
+  font-size: 28px;
+}
+
+.brand {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 700;
   letter-spacing: -0.5px;
+}
+
+.brand-clip {
+  color: var(--text);
+}
+
+.brand-scry {
+  color: var(--accent);
 }
 
 .lp-nav-btn {

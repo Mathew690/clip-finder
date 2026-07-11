@@ -1,4 +1,5 @@
 import LoginForm from './LoginForm'
+import Brand from './Brand'
 
 function scrollToStart() {
   document.getElementById('get-started')?.scrollIntoView({ behavior: 'smooth' })
@@ -25,7 +26,7 @@ export default function LandingPage() {
   return (
     <div className="lp">
       <nav className="lp-nav">
-        <span className="lp-logo">🔮 ClipScry</span>
+        <span className="lp-logo"><Brand /></span>
         <button type="button" className="lp-nav-btn" onClick={scrollToStart}>Sign in</button>
       </nav>
 
@@ -111,7 +112,7 @@ export default function LandingPage() {
       </section>
 
       <footer className="lp-footer">
-        <p>🔮 ClipScry — made by one tired editor, for tired editors.</p>
+        <p><Brand /> — made by one tired editor, for tired editors.</p>
       </footer>
     </div>
   )
