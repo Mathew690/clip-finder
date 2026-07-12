@@ -42,7 +42,7 @@ Decisions made 2026-07-06: transcription = Groq API (key in `.env.local` as GROQ
 ## Agreed v2 roadmap (2026-07-07, owner's vision, in priority order)
 
 1. **Audio preview on search results** — store extracted audio going forward (16kHz opus ≈ 11MB/hr; whole library ~130MB fits Supabase Storage free tier). Search result gets a ▶ button playing the moment. Requires: transcribe.mjs uploads audio to Storage instead of deleting; RLS on the bucket.
-2. **Export clip to editor** — from a search result, request a cut; helper (watching a jobs table or run on demand) uses ffmpeg `-ss/-to -c copy` to cut the segment into an `exports/` folder for drag-into-Premiere. Requires: export_jobs table.
+2. **Export clip to editor** — DONE 2026-07-11. `export_jobs` table + `helper/export.mjs` (ffmpeg cut to mp4 in `exports/`, gitignored). UI: Export button + 5s/10s/Custom padding menu on each search result → queues job → `npm run sync` (now scan+transcribe+export) builds it, sync.bat opens the folder. Verified: real h264+aac mp4 produced. Gracefully skips deleted source files.
 3. Landing page + copy-timestamp button: DONE 2026-07-07.
 4. Video preview: blocked by .mkv (browsers can't play it). Path: switch OBS to record mp4 (or auto-remux) for future clips, then local playback via File System Access API.
 
