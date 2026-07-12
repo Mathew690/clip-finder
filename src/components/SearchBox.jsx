@@ -13,15 +13,27 @@ function estimateMomentTime(result, query) {
   let idx = -1
   for (const term of terms) {
     const i = text.indexOf(term)
-    if (i !== -1) {
-      idx = i
-      break
-    }
+    if (i !== -1) { idx = i; break }
   }
 
   if (idx <= 0 || !end || end <= start) return { seconds: start, estimated: false }
   const ratio = idx / result.text.length
   return { seconds: start + ratio * (end - start), estimated: true }
+}
+
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function highlightText(text, query) {
+  const terms = query.toLowerCase().split(/\s+/).filter((t) => t.length > 1)
+  if (!terms.length) return text
+  const pattern = new RegExp(`(${terms.map(escapeRegex).join('|')})`, 'gi')
+  return text.split(pattern).map((part, i) =>
+    terms.includes(part.toLowerCase())
+      ? <mark key={i} className="hl">{part}</mark>
+      : part
+  )
 }
 
 function SaveButton({ result }) {
@@ -40,24 +52,22 @@ function SaveButton({ result }) {
 
   if (state === 'saved') return <span className="saved-badge">★ Saved</span>
   return (
-    <button type="button" className="copy-button" onClick={save} disabled={state === 'saving'}>
+    <button type="button" className="action-btn" onClick={save} disabled={state === 'saving'}>
       ☆ Save
     </button>
   )
 }
 
-function CopyButton({ filename, seconds }) {
-  const [copied, setCopied] = useState(false)
-
-  async function copy() {
-    await copyText(`${filename} @ ${formatTimestamp(seconds)}`)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1500)
+function ActionButton({ label, doneLabel, onAction }) {
+  const [done, setDone] = useState(false)
+  async function run() {
+    await onAction()
+    setDone(true)
+    setTimeout(() => setDone(false), 1500)
   }
-
   return (
-    <button type="button" className="copy-button" onClick={copy}>
-      {copied ? 'Copied ✓' : 'Copy'}
+    <button type="button" className="action-btn" onClick={run}>
+      {done ? doneLabel : label}
     </button>
   )
 }
@@ -72,25 +82,19 @@ export default function SearchBox() {
   async function handleSearch(e) {
     e.preventDefault()
     const q = query.trim()
-    if (!q) {
-      setResults(null)
-      return
-    }
+    if (!q) { setResults(null); return }
     setSearching(true)
     setError(null)
 
     const { data, error } = await supabase
       .from('transcript_segments')
-      .select('clip_id, start_seconds, end_seconds, text, clips(filename, recorded_at)')
+      .select('clip_id, start_seconds, end_seconds, text, clips(filename, folder_path, recorded_at)')
       .textSearch('fts', q, { type: 'websearch' })
       .limit(50)
 
     setSearching(false)
     if (error) setError(error.message)
-    else {
-      setResults(data)
-      setLastQuery(q)
-    }
+    else { setResults(data); setLastQuery(q) }
   }
 
   return (
@@ -120,19 +124,29 @@ export default function SearchBox() {
           <ul className="result-list">
             {results.map((r, i) => {
               const moment = estimateMomentTime(r, lastQuery)
+              const fullPath = `${r.clips.folder_path ?? ''}\\${r.clips.filename}`
               return (
-                <li key={i} className="result-row">
-                  <div className="result-where">
+                <li key={i} className="result-card">
+                  <div className="result-card-meta">
                     <span className="result-file">{r.clips.filename}</span>
                     <span className="result-time">
-                      at {moment.estimated ? '~' : ''}{formatTimestamp(moment.seconds)}
+                      {moment.estimated ? '~' : ''}{formatTimestamp(moment.seconds)}
                     </span>
-                    <div className="row-actions">
-                      <SaveButton result={r} />
-                      <CopyButton filename={r.clips.filename} seconds={moment.seconds} />
-                    </div>
                   </div>
-                  <p className="result-text">"{r.text}"</p>
+                  <p className="result-quote">"{highlightText(r.text, lastQuery)}"</p>
+                  <div className="result-card-actions">
+                    <SaveButton result={r} />
+                    <ActionButton
+                      label="Copy timestamp"
+                      doneLabel="Copied ✓"
+                      onAction={() => copyText(`${r.clips.filename} @ ${formatTimestamp(moment.seconds)}`)}
+                    />
+                    <ActionButton
+                      label="Copy path"
+                      doneLabel="Copied ✓"
+                      onAction={() => copyText(fullPath)}
+                    />
+                  </div>
                 </li>
               )
             })}
