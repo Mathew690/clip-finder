@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "sync": "node helper/scan.mjs && node helper/transcribe.mjs"
+    "sync": "node helper/scan.mjs && node helper/transcribe.mjs && node helper/export.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.0",

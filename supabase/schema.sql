@@ -65,3 +65,26 @@ alter table saved_moments enable row level security;
 
 create policy "own moments" on saved_moments
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- Added 2026-07-11: clip export jobs (helper cuts .mp4 with ffmpeg, local, no API)
+create table export_jobs (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users (id) default auth.uid(),
+  clip_id uuid not null references clips (id) on delete cascade,
+  start_seconds numeric not null,
+  end_seconds numeric,
+  pad_before numeric not null default 5,
+  pad_after numeric not null default 3,
+  label text,
+  status text not null default 'pending'
+    check (status in ('pending', 'processing', 'done', 'error')),
+  output_path text,
+  created_at timestamptz not null default now()
+);
+
+create index on export_jobs (user_id, status);
+
+alter table export_jobs enable row level security;
+
+create policy "own export jobs" on export_jobs
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);

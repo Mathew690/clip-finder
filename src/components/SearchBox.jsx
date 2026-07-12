@@ -58,6 +58,51 @@ function SaveButton({ result }) {
   )
 }
 
+function ExportButton({ result, label }) {
+  const [open, setOpen] = useState(false)
+  const [custom, setCustom] = useState(false)
+  const [before, setBefore] = useState(5)
+  const [after, setAfter] = useState(3)
+  const [queued, setQueued] = useState(false)
+
+  async function queue(padBefore, padAfter) {
+    await supabase.from('export_jobs').insert({
+      clip_id: result.clip_id,
+      start_seconds: result.start_seconds,
+      end_seconds: result.end_seconds,
+      pad_before: padBefore,
+      pad_after: padAfter,
+      label,
+    })
+    setQueued(true)
+    setOpen(false)
+  }
+
+  if (queued) return <span className="saved-badge">✓ Export queued — run Sync</span>
+
+  return (
+    <span className="export-wrap">
+      <button type="button" className="action-btn" onClick={() => setOpen(!open)}>
+        Export clip ▾
+      </button>
+      {open && (
+        <div className="export-menu">
+          <button type="button" onClick={() => queue(5, 3)}>5s before</button>
+          <button type="button" onClick={() => queue(10, 3)}>10s before</button>
+          <button type="button" onClick={() => setCustom(!custom)}>Custom…</button>
+          {custom && (
+            <div className="export-custom">
+              <label>Before<input type="number" min="0" value={before} onChange={(e) => setBefore(Number(e.target.value))} /></label>
+              <label>After<input type="number" min="0" value={after} onChange={(e) => setAfter(Number(e.target.value))} /></label>
+              <button type="button" className="action-btn" onClick={() => queue(before, after)}>Queue</button>
+            </div>
+          )}
+        </div>
+      )}
+    </span>
+  )
+}
+
 function ActionButton({ label, doneLabel, onAction }) {
   const [done, setDone] = useState(false)
   async function run() {
@@ -146,6 +191,7 @@ export default function SearchBox() {
                       doneLabel="Copied ✓"
                       onAction={() => copyText(fullPath)}
                     />
+                    <ExportButton result={r} label={lastQuery} />
                   </div>
                 </li>
               )
