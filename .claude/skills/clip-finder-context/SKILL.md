@@ -46,6 +46,14 @@ Decisions made 2026-07-06: transcription = Groq API (key in `.env.local` as GROQ
 3. Landing page + copy-timestamp button: DONE 2026-07-07.
 4. Video preview: blocked by .mkv (browsers can't play it). Path: switch OBS to record mp4 (or auto-remux) for future clips, then local playback via File System Access API.
 
+## Payments — Milestone A DONE (2026-07-12), verified end-to-end
+
+Stripe sandbox (account ErilBays LLC). Plan: Free 5h/mo · Pro $7/mo 100h + export. `profiles` table (plan/status/stripe_customer_id/hours_used/period_start; RLS lets user READ+INSERT own, NO update — only Edge Functions via service role flip plan). Two Edge Functions deployed: `create-checkout-session` (--no-verify-jwt, verifies user inside, CORS incl apikey/x-client-info) and `stripe-webhook` (--no-verify-jwt, verifies Stripe signature). Secrets set: STRIPE_SECRET_KEY, STRIPE_PRICE_ID (price_1TsQOHHmewRhRXPRSbNloXu4), STRIPE_WEBHOOK_SECRET, SITE_URL. Stripe webhook endpoint → functions/v1/stripe-webhook, 4 events. Frontend: AuthContext has `plan`+`refreshPlan`; ProfileMenu shows Pro/Free badge + Upgrade button (lib/checkout.js invokes function, redirects); Layout shows post-checkout banner on ?upgraded=1. Owner is Pro. Deploy functions via `npx supabase functions deploy <name> --project-ref dugdiqinydgraqbxtidu [--no-verify-jwt]` (login stored; Docker warning is harmless).
+
+KNOWN WART: after Stripe return, session appeared logged out (apex clipscry.com vs www.clipscry.com localStorage origin mismatch). Fix: force one canonical origin.
+
+Milestone B TODO (the real gate): transcription proxy Edge Function + monthly hour quota (free 5h/mo, pro 100h) enforced server-side — needs the companion app to route transcription through the proxy instead of the local Groq key.
+
 ## Launch blockers (what stands between "works for owner" and "strangers can buy") — identified 2026-07-07
 
 1. **Companion app**: package the helper as a downloadable Windows app (login + folder picker + start button; no terminal). Candidate tech: Tauri tray app, or pkg/bun-compiled CLI first. Folder-agnostic already.
