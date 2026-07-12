@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Exported clips — local output, never commit
+exports/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
