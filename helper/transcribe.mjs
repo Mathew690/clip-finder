@@ -42,6 +42,10 @@ if (authError) {
 }
 console.log(`Signed in as ${auth.user.email}`)
 
+// --- reset clips orphaned in 'transcribing' by a previously interrupted run,
+// so they get retried automatically instead of being stuck forever
+await supabase.from('clips').update({ status: 'pending' }).eq('status', 'transcribing')
+
 // --- fetch pending clips, smallest first (fast wins, quick failures)
 let query = supabase
   .from('clips')
