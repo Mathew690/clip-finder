@@ -24,7 +24,10 @@ for (const key of ['VITE_SUPABASE_URL', 'VITE_SUPABASE_PUBLISHABLE_KEY', 'SUPABA
   }
 }
 
-const folder = resolve(process.argv[2] ?? 'D:\\OBS VIDEOS new')
+// folder priority: command-line arg > user's saved setting > default
+const { data: settings } = await supabase
+  .from('user_settings').select('footage_folder').eq('user_id', auth.user.id).maybeSingle()
+const folder = resolve(process.argv[2] ?? settings?.footage_folder ?? 'D:\\OBS VIDEOS new')
 const VIDEO_EXTENSIONS = ['.mkv', '.mp4', '.mov', '.flv']
 
 // --- sign in as the owner so RLS lets us write

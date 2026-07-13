@@ -939,6 +939,46 @@
   color: var(--accent);
 }
 
+.folder-label {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.folder-input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 14px;
+}
+
+.folder-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.folder-hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 6px 0 12px;
+}
+
+.folder-save {
+  margin-bottom: 4px;
+}
+
+.modal-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
 .row-actions {
   margin-left: auto;
   display: flex;

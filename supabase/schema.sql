@@ -88,3 +88,15 @@ alter table export_jobs enable row level security;
 
 create policy "own export jobs" on export_jobs
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- Added 2026-07-12: per-user footage folder setting (read by the helper's scan step)
+create table user_settings (
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  footage_folder text,
+  updated_at timestamptz not null default now()
+);
+
+alter table user_settings enable row level security;
+
+create policy "own settings" on user_settings
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
