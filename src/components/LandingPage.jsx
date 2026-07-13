@@ -127,6 +127,33 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <section className="lp-section">
+        <h2 className="lp-h2">Simple pricing</h2>
+        <div className="lp-pricing">
+          <div className="lp-price-card">
+            <p className="lp-price-name">Free</p>
+            <p className="lp-price-amount">$0</p>
+            <ul className="lp-price-list">
+              <li>✓ 5 hours of transcription / month</li>
+              <li>✓ Full search across your footage</li>
+              <li>✓ Save moments to your gold pile</li>
+            </ul>
+            <button type="button" className="lp-price-cta" onClick={scrollToStart}>Start free</button>
+          </div>
+          <div className="lp-price-card featured">
+            <span className="lp-price-badge">Best value</span>
+            <p className="lp-price-name">Pro</p>
+            <p className="lp-price-amount">$7<span className="lp-price-per">/mo</span></p>
+            <ul className="lp-price-list">
+              <li>✓ 100 hours of transcription / month</li>
+              <li>✓ Everything in Free</li>
+              <li>✓ Clip export (cut clips, no editor needed)</li>
+            </ul>
+            <button type="button" className="lp-price-cta primary" onClick={scrollToStart}>Get Pro</button>
+          </div>
+        </div>
+      </section>
+
       <section className="lp-section lp-getstarted" id="get-started">
         <h2 className="lp-h2">Start scrying your footage</h2>
         <p className="lp-sub lp-sub-center">Free to start. Your videos never leave your PC.</p>
