@@ -7,6 +7,24 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!)
 const PRICE_ID = Deno.env.get('STRIPE_PRICE_ID')!
 const SITE_URL = Deno.env.get('SITE_URL') ?? 'https://www.clipscry.com'
 
+// Return the caller's origin ONLY if we trust it, so the user lands back on the
+// same origin their session lives in (localStorage is per-origin). Anything else
+// falls back to the canonical site — this also stops open-redirect abuse.
+function resolveOrigin(raw: unknown): string {
+  if (typeof raw !== 'string') return SITE_URL
+  try {
+    const u = new URL(raw)
+    const host = u.hostname
+    const trusted =
+      host === 'www.clipscry.com' ||
+      host === 'clipscry.com' ||
+      host === 'localhost' ||
+      (host.endsWith('.vercel.app') && host.startsWith('clip-finder'))
+    if (trusted && (u.protocol === 'https:' || host === 'localhost')) return u.origin
+  } catch { /* not a valid URL — fall through */ }
+  return SITE_URL
+}
+
 const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -16,6 +34,10 @@ const cors = {
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
   try {
+    let body: { origin?: string } = {}
+    try { body = await req.json() } catch { /* empty body is fine */ }
+    const origin = resolveOrigin(body.origin)
+
     const authHeader = req.headers.get('Authorization') ?? ''
     const userClient = createClient(
       Deno.env.get('SUPABASE_URL')!,
@@ -49,8 +71,8 @@ Deno.serve(async (req) => {
       mode: 'subscription',
       customer: customerId,
       line_items: [{ price: PRICE_ID, quantity: 1 }],
-      success_url: `${SITE_URL}/?upgraded=1`,
-      cancel_url: `${SITE_URL}/`,
+      success_url: `${origin}/?upgraded=1`,
+      cancel_url: `${origin}/`,
       metadata: { user_id: user.id },
     })
 
