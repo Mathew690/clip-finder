@@ -60,10 +60,14 @@ export default function LandingPage() {
       <section className="lp-section">
         <h2 className="lp-h2">See it in action</h2>
         <div className="lp-video-slot">
-          <div className="lp-video-placeholder">
-            <span className="lp-play">▶</span>
-            <p>Your 60-second demo goes here</p>
-          </div>
+          <video
+            className="lp-video"
+            src="/demo.mp4"
+            poster="/demo-poster.jpg"
+            controls
+            preload="metadata"
+            playsInline
+          />
         </div>
       </section>
 

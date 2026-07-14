@@ -205,6 +205,15 @@
   color: var(--muted);
 }
 
+.lp-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: #000;
+  display: block;
+}
+
 .lp-play {
   width: 64px;
   height: 64px;
