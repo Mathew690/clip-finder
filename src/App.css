@@ -1080,6 +1080,36 @@
   margin: 20px 0;
 }
 
+.account-rows {
+  margin: 4px 0 0;
+}
+
+.account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.account-row:last-child {
+  border-bottom: none;
+}
+
+.account-row dt {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.account-row dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text);
+  text-align: right;
+  word-break: break-all;
+}
+
 .row-actions {
   margin-left: auto;
   display: flex;

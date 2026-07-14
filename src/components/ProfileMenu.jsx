@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { startCheckout } from '../lib/checkout'
+import { startCheckout, startBillingPortal } from '../lib/checkout'
+import AccountModal from './AccountModal'
 
 export default function ProfileMenu() {
   const { user, plan, signOut } = useAuth()
   const [open, setOpen] = useState(false)
+  const [accountOpen, setAccountOpen] = useState(false)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -45,10 +47,24 @@ export default function ProfileMenu() {
               ⚡ Upgrade to Pro <span className="upgrade-price">$7/mo</span>
             </button>
           )}
-          <button type="button" className="dropdown-item" disabled>Account <span className="soon">soon</span></button>
-          <button type="button" className="dropdown-item" disabled>Billing <span className="soon">soon</span></button>
+          <button
+            type="button"
+            className="dropdown-item"
+            onClick={() => { setAccountOpen(true); setOpen(false) }}
+          >
+            Account
+          </button>
+          {isPro && (
+            <button type="button" className="dropdown-item" onClick={startBillingPortal}>
+              Billing
+            </button>
+          )}
           <button type="button" className="dropdown-item danger" onClick={signOut}>Sign out</button>
         </div>
+      )}
+
+      {accountOpen && (
+        <AccountModal user={user} plan={plan} onClose={() => setAccountOpen(false)} />
       )}
     </div>
   )
