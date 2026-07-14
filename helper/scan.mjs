@@ -24,12 +24,6 @@ for (const key of ['VITE_SUPABASE_URL', 'VITE_SUPABASE_PUBLISHABLE_KEY', 'SUPABA
   }
 }
 
-// folder priority: command-line arg > user's saved setting > default
-const { data: settings } = await supabase
-  .from('user_settings').select('footage_folder').eq('user_id', auth.user.id).maybeSingle()
-const folder = resolve(process.argv[2] ?? settings?.footage_folder ?? 'D:\\OBS VIDEOS new')
-const VIDEO_EXTENSIONS = ['.mkv', '.mp4', '.mov', '.flv']
-
 // --- sign in as the owner so RLS lets us write
 const supabase = createClient(env.VITE_SUPABASE_URL, env.VITE_SUPABASE_PUBLISHABLE_KEY)
 const { data: auth, error: authError } = await supabase.auth.signInWithPassword({
@@ -41,6 +35,12 @@ if (authError) {
   process.exit(1)
 }
 console.log(`Signed in as ${auth.user.email}`)
+
+// folder priority: command-line arg > user's saved setting > default
+const { data: settings } = await supabase
+  .from('user_settings').select('footage_folder').eq('user_id', auth.user.id).maybeSingle()
+const folder = resolve(process.argv[2] ?? settings?.footage_folder ?? 'D:\\OBS VIDEOS new')
+const VIDEO_EXTENSIONS = ['.mkv', '.mp4', '.mov', '.flv']
 
 // --- probe one file's duration in seconds via ffprobe
 async function probeDuration(path) {
