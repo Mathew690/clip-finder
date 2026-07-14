@@ -1477,3 +1477,27 @@
   font-size: 14px;
   color: var(--muted);
 }
+
+/* mobile: stack the "How it works" flow top-to-bottom with downward arrows */
+@media (max-width: 600px) {
+  .lp-flow {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .lp-flow-item {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+    gap: 4px;
+  }
+
+  .lp-flow-step {
+    width: 100%;
+  }
+
+  .lp-flow-arrow {
+    transform: rotate(90deg);
+    line-height: 1;
+  }
+}
