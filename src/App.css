@@ -1080,6 +1080,20 @@
   margin: 20px 0;
 }
 
+.early-access {
+  max-width: 560px;
+  padding: 28px 0;
+  line-height: 1.65;
+}
+
+.early-access h2 {
+  margin-bottom: 12px;
+}
+
+.early-access p {
+  margin-bottom: 12px;
+}
+
 .account-rows {
   margin: 4px 0 0;
 }

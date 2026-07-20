@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
+import { isOwner } from '../lib/isOwner'
 
 export default function AddFootage() {
   const { user } = useAuth()
@@ -62,6 +63,22 @@ export default function AddFootage() {
               <button type="button" className="modal-close" onClick={() => setOpen(false)}>✕</button>
             </div>
 
+            {!isOwner(user) ? (
+              <>
+                <p className="modal-text">
+                  <strong>You're on the early access list 🎉</strong>
+                </p>
+                <p className="modal-text">
+                  The one-click importer — point ClipScry at your footage folder and it
+                  does the rest — is being built right now. Until it ships, I'm onboarding
+                  people by hand so I can get it right.
+                </p>
+                <p className="modal-text muted-small">
+                  I'll email you the moment it's ready. Nothing else you need to do.
+                </p>
+              </>
+            ) : (
+              <>
             <p className="modal-text">
               Point ClipScry at the folder where OBS (or ShadowPlay, etc.) saves your
               recordings. Your video files stay on your PC — only the words get indexed.
@@ -99,6 +116,8 @@ export default function AddFootage() {
             <p className="modal-text muted-small">
               A one-click desktop app that does this automatically is on the roadmap.
             </p>
+              </>
+            )}
           </div>
         </div>
       )}

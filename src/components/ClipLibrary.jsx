@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { useAuth } from '../context/AuthContext'
+import { isOwner } from '../lib/isOwner'
 
 function RemoveButton({ clip, onRemoved }) {
   const [confirming, setConfirming] = useState(false)
@@ -100,6 +102,7 @@ function RemoveAllButton({ count, onCleared }) {
 }
 
 export default function ClipLibrary() {
+  const { user } = useAuth()
   const [clips, setClips] = useState(null)
   const [error, setError] = useState(null)
 
@@ -118,6 +121,21 @@ export default function ClipLibrary() {
   if (clips === null) return <p className="muted">Loading your library…</p>
 
   if (clips.length === 0) {
+    if (!isOwner(user)) {
+      return (
+        <div className="early-access">
+          <h2>You're on the early access list 🎉</h2>
+          <p>
+            Thanks for signing up. ClipScry's one-click footage importer is being
+            built right now — until it lands, I'm onboarding people by hand so I
+            can get it right.
+          </p>
+          <p className="muted">
+            I'll email you the moment it's ready. Nothing else you need to do.
+          </p>
+        </div>
+      )
+    }
     return (
       <div>
         <h2>Your library is empty</h2>
